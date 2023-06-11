@@ -3,11 +3,10 @@ import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import getReservations from "@/app/actions/getReservations";
+import PropertiesClient from "./PropertiesClient";
+import getListings from "../actions/getListings";
 
-import TripsClient from "./TripsClient";
-
-const TripsPage = async () => {
+const PropertiesPage = async () => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -21,14 +20,14 @@ const TripsPage = async () => {
     );
   }
 
-  const reservations = await getReservations({ userId: currentUser.id });
+  const listings = await getListings({ userId: currentUser.id });
 
-  if (reservations.length === 0) {
+  if (listings.length === 0) {
     return (
       <ClientOnly>
         <EmptyState
-          title='Nenhuma viagem encontrada :('
-          subtitle="Parece que você não reservou nenhuma viagem"
+          title='Nenhuma propriedade encontada :('
+          subtitle="Parece que você não possui propriedades cadastradas."
         />
       </ClientOnly>
     );
@@ -36,12 +35,12 @@ const TripsPage = async () => {
 
   return (
     <ClientOnly>
-      <TripsClient
-        reservations={reservations}
+      <PropertiesClient
+        listings={listings}
         currentUser={currentUser}
       />
     </ClientOnly>
   );
 }
  
-export default TripsPage;
+export default PropertiesPage;
