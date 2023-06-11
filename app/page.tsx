@@ -8,6 +8,7 @@ import getListings, {
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import ClientOnly from "./components/ClientOnly";
 
+
 interface HomeProps {
   searchParams: IListingsParams
 };
@@ -16,6 +17,8 @@ const Home = async ({ searchParams }: HomeProps) => {
   
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
+  
+
 
   if (listings.length === 0) {
     return (
@@ -45,9 +48,10 @@ const Home = async ({ searchParams }: HomeProps) => {
         >
           {listings.map((listing: any) => (
             <ListingCard
-              currentUser={currentUser}
-              key={listing.id}
-              data={listing}
+            currentUser={currentUser}
+            key={listing.id}
+            data={listing}
+    
             />
           ))}
         </div>
